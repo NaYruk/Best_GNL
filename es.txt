@@ -1,0 +1,8 @@
+1 : fonction pour faire les reads successifs et stocker ceux ci dans une seule et unique string.
+		fonction qui stock le read dans la chaine de caractere stock.
+
+2 : fonction pour extraire du stockage la ligne final jusqu au \n.
+	compte la ligne jusqu au \n puis que je malloc la size total - size du \n + 1 pour le \0.
+
+3 : fonction qui update le stock en coupant au niveau du \n.
+	cherche la dimension jusqu au \n inclut puis que je malloc size total - size du \n + 1 pour le \0.
