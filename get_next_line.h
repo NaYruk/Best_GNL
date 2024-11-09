@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcmilliot <marcmilliot@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmilliot <mmilliot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 00:28:20 by marcmilliot       #+#    #+#             */
-/*   Updated: 2024/11/09 03:10:33 by marcmilliot      ###   ########.fr       */
+/*   Updated: 2024/11/09 17:35:00 by mmilliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ size_t	ft_strlen(char *str);
 int		search_new_line(char *stock);
 char	*ft_strjoin(char *buff, char *stock);
 char	*get_next_line(int fd);
-void	free_stock(char **stock);
+char	*free_stock(char **stock);
 void	put_buff_stock_in_new_stock(char **new_stock, char *stock, char *buff);
 char	*get_malloc_new_stock(char **stock, char *buff);
 

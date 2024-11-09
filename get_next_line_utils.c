@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcmilliot <marcmilliot@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmilliot <mmilliot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 00:33:27 by marcmilliot       #+#    #+#             */
-/*   Updated: 2024/11/09 03:26:34 by marcmilliot      ###   ########.fr       */
+/*   Updated: 2024/11/09 17:49:48 by mmilliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i] != '\0')
 		i++;
@@ -52,7 +54,10 @@ char	*ft_strjoin(char *buff, char *stock)
 	}
 	new_stock = malloc(sizeof(char) * (ft_strlen(buff) + ft_strlen(stock) + 1));
 	if (!new_stock)
+	{
+		free_stock(&stock);
 		return (NULL);
+	}
 	put_buff_stock_in_new_stock(&new_stock, stock, buff);
 	free(stock);
 	return (new_stock);
@@ -79,11 +84,9 @@ void	put_buff_stock_in_new_stock(char **new_stock, char *stock, char *buff)
 	(*new_stock)[i] = '\0';
 }
 
-void	free_stock(char **stock)
+char	*free_stock(char **stock)
 {
-	if (*stock)
-	{
-		free(*stock);
-		*stock = NULL;
-	}
+	free(*stock);
+	*stock = NULL;
+	return (NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marcmilliot <marcmilliot@student.42.fr>    +#+  +:+       +#+        */
+/*   By: mmilliot <mmilliot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 00:30:25 by marcmilliot       #+#    #+#             */
-/*   Updated: 2024/11/09 03:26:30 by marcmilliot      ###   ########.fr       */
+/*   Updated: 2024/11/09 20:15:28 by mmilliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,20 @@ static char	*read_and_stock(char *stock, int fd)
 	{
 		buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!buff)
-			return (NULL);
+			return (free_stock(&stock));
 		value_read = read(fd, buff, BUFFER_SIZE);
-		if (value_read <= 0)
+		if (value_read == -1)
 		{
 			free(buff);
-			if (value_read == -1 && stock != NULL)
-				free_stock(&stock);
-			return (stock);
+			return (free_stock(&stock));
+		}
+		if (value_read == 0)
+		{
+			free(buff);
+			break ;
 		}
 		buff[value_read] = '\0';
 		stock = ft_strjoin(buff, stock);
-		if (!stock)
-			return (NULL);
 		free(buff);
 	}
 	return (stock);
@@ -44,7 +45,10 @@ static char	*get_final_line(char *stock)
 {
 	char	*final_line;
 	size_t	i;
+	size_t	j;
 
+	if (!stock)
+		return (NULL);
 	i = 0;
 	while (stock[i] != '\n' && stock[i])
 		i++;
@@ -52,46 +56,41 @@ static char	*get_final_line(char *stock)
 		i++;
 	final_line = malloc(sizeof(char) * (i + 1));
 	if (!final_line)
-	{
-		free_stock(&stock);
 		return (NULL);
-	}
-	i = 0;
-	while (stock[i] != '\n' && stock[i] != '\0')
+	j = 0;
+	while (i > j)
 	{
-		final_line[i] = stock[i];
-		i++;
+		final_line[j] = stock[j];
+		j++;
 	}
-	if (stock[i] == '\n')
-		final_line[i++] = '\n';
 	final_line[i] = '\0';
 	return (final_line);
 }
 
-static void	update_stock(char **stock)
+static char	*update_stock(char *stock)
 {
 	char	*temp;
 	size_t	i;
 	size_t	j;
 
+	if (!stock)
+		return (NULL);
 	i = 0;
-	j = 0;
-	temp = NULL;
-	while ((*stock)[i] != '\n' && (*stock)[i] != '\0')
+	while (stock[i] != '\n' && stock[i] != '\0')
 		i++;
-	if ((*stock)[i] == '\n')
+	if (stock[i] == '\n')
 		i++;
-	temp = malloc(sizeof(char) * (ft_strlen(*stock) - i + 1));
+	if (!stock[i])
+		return (free_stock(&stock));
+	temp = malloc(sizeof(char) * (ft_strlen(stock) - i + 1));
 	if (!temp)
-	{
-		free_stock(stock);
-		return ;
-	}
-	while ((*stock)[i] != '\0')
-		temp[j++] = (*stock)[i++];
+		return (free_stock(&stock));
+	j = 0;
+	while (stock[i] != '\0')
+		temp[j++] = stock[i++];
 	temp[j] = '\0';
-	free(*stock);
-	(*stock) = temp;
+	free_stock(&stock);
+	return (temp);
 }
 
 char	*get_next_line(int fd)
@@ -101,20 +100,13 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	final_line = NULL;
 	stock = read_and_stock(stock, fd);
-	if (stock == NULL)
+	if (!stock)
 		return (NULL);
 	final_line = get_final_line(stock);
-	if (final_line == NULL)
-		return (NULL);
-	update_stock(&stock);
-	if (stock == NULL)
-		return (NULL);
-	if (stock[0] == '\0')
-	{
-		free(stock);
-		stock = NULL;
-		return (final_line);
-	}
+	if (!final_line)
+		return (free_stock(&stock));
+	stock = update_stock(stock);
 	return (final_line);
 }

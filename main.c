@@ -6,7 +6,7 @@
 /*   By: marcmilliot <marcmilliot@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/09 01:47:29 by marcmilliot       #+#    #+#             */
-/*   Updated: 2024/11/09 03:13:36 by marcmilliot      ###   ########.fr       */
+/*   Updated: 2024/11/09 16:08:56 by mmilliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,18 @@ int	main(int argc, char **argv)
 	char	*line;
 	size_t	i;
 
-	line = NULL;
-	/*line = get_next_line(fd);
+	fd = 0;
+    	line = NULL;
+	line = get_next_line(fd);
 	i = 0;
-	while(line[i] != '\0')						// test pour stdin.
+	/*while(line[i] != '\0')						// test pour stdin.
 	{
 		if (line[i] == '\n')
 			printf("/n");
 		printf("%c", line[i]);
 		i++;
-	}*/
+	}
+	free(line);*/
 	if (argc < 2)
 	{
 		printf("Il manque le fichier a lire");
@@ -51,7 +53,8 @@ int	main(int argc, char **argv)
 			printf("%c", line[i]);
 			i++;
 		}
+		free(line);
 	}
-	//close(fd);
+	close(fd);
 	return (0);
 }
