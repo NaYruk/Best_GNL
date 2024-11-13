@@ -6,7 +6,7 @@
 /*   By: mmilliot <mmilliot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:40:56 by mmilliot          #+#    #+#             */
-/*   Updated: 2024/11/12 13:41:50 by mmilliot         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:26:37 by mmilliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ char	*ft_strjoin(char *buff, char *stock);
 char	*get_next_line(int fd);
 char	*free_stock(char **stock);
 void	put_buff_stock_in_new_stock(char **new_stock, char *stock, char *buff);
-char	*get_malloc_new_stock(char **stock, char *buff);
 
 #endif

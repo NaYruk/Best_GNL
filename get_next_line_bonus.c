@@ -6,7 +6,7 @@
 /*   By: mmilliot <mmilliot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:40:05 by mmilliot          #+#    #+#             */
-/*   Updated: 2024/11/12 14:43:43 by mmilliot         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:24:54 by mmilliot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static char	*update_stock(char *stock)
 		i++;
 	if (stock[i] == '\n')
 		i++;
-	if (!stock[i])
+	if (stock[i] == '\0')
 		return (free_stock(&stock));
 	temp = malloc(sizeof(char) * (ft_strlen(stock) - i + 1));
 	if (!temp)
